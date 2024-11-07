@@ -118,6 +118,10 @@ public:
         {
             size--;
         }
+        else if (index < 0)
+        {
+            index == 0;
+        }
 
 
         for (int i = index; i < size; i++)
