@@ -93,7 +93,7 @@ public:
 
     // ...остальные методы...
 
-    void Insert(int index, int element_value)
+    void insert(int index, int element_value)
     {
         if (index > size)
         {
@@ -112,7 +112,7 @@ public:
     }
 
 
-    void RemoveAt(int index)
+    void remove_at(int index)
     {
         if (index > size)
         {
@@ -131,7 +131,47 @@ public:
         size--;
     }
 
+    void remove_by_value(int value) 
+    {
+        for (int i = 0; i < size; i++)
+        {
+            if (data[i] == value)
+            {
+                for (int j = i; j< size; j++)
+                {
+                    data[j] = data[j + 1];
+                }
+                size--;
+            }
+        }
+    }
 
+    void pop_front()
+    {       
+        for (int i = 0; i < size; i++)
+        {
+            data[i] = data[i + 1];
+        }
+        size--;
+    }
+
+    void pop_back()
+    {
+        size--;
+    }
+
+    void trim_to_size()
+    {
+        int new_capacity = capacity - (capacity - size);
+        int* temp = new int[new_capacity];
+        for (int i = 0; i < size; ++i) 
+        { 
+            temp[i] = data[i];
+        }
+        delete[] data;
+        data = temp;
+        capacity = new_capacity;
+    }
 
 };
 
@@ -141,12 +181,30 @@ int main()
     ar.PushBack(1);
     ar.PushBack(2);
     ar.PushBack(3);
+    ar.PushBack(4);
+    ar.PushBack(5);
+    ar.PushBack(4);
+
+
     ar.Print();
-    ar.Insert(1, 7);
+    ar.insert(1, 7);
     ar.Print();
 
-    ar.RemoveAt(1);
+    ar.remove_at(1);
     ar.Print();
+    ar.remove_by_value(4);
+    ar.Print();
+    ar.pop_front();
+    ar.Print();
+    ar.pop_back();
+    ar.Print();
+    cout << "old capacity = " << ar.GetCapacity() << "\n";
+    ar.trim_to_size();
+    cout << "new capacity = " << ar.GetCapacity() << "\n";
+
+
+
+
 
 
 
