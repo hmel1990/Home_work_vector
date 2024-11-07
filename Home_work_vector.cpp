@@ -93,22 +93,22 @@ public:
 
     // ...остальные методы...
 
-    void insert(int index, int element_value)
+    void insert(unsigned int index, int element_value)
     {
         if (index > size)
         {
+            PushBack(element_value);
+        }
+        else {
             EnsureCapacity();
-            data[size++] = element_value;
-        }
 
-        EnsureCapacity();
-
-        for (int i = size; i > index; --i)
-        {
-            data[i] = data[i - 1];
+            for (int i = size; i > index; --i)
+            {
+                data[i] = data[i - 1];
+            }
+            data[index] = element_value;
+            size++;
         }
-        data[index] = element_value;
-        size++;
     }
 
 
@@ -120,7 +120,7 @@ public:
         }
         else if (index < 0)
         {
-            index == 0;
+            index = 0;
         }
 
 
@@ -131,7 +131,7 @@ public:
         size--;
     }
 
-    void remove_by_value(int value) 
+    void remove_by_value(int value) //
     {
         for (int i = 0; i < size; i++)
         {
@@ -173,6 +173,48 @@ public:
         capacity = new_capacity;
     }
 
+    int index_of(int value)
+    {
+        int i = 0;
+        while (i<size)
+        {
+            if (data[i] == value)
+            {
+                break;
+            }
+            i++;
+        }
+        if (i < size) return i;
+        else return -1;
+    }
+
+    int last_index_of(int value)
+    {
+        int i = size;
+        while (i >= 0)
+        {
+            if (data[i] == value)
+            {
+                break;
+            }
+            i--;
+        }
+        if (i < 0) return -1;
+        else return i;
+    }
+
+    void reverse()
+    {      
+        int* temp = new int[capacity];
+
+        for (int i = 0; i < size; ++i) 
+        { 
+            temp[i] = data[size - i -1];
+        }
+        delete[] data;
+        data = temp;
+    }
+
 };
 
 int main()
@@ -185,6 +227,17 @@ int main()
     ar.PushBack(5);
     ar.PushBack(4);
 
+    ar.Print();
+    ar.reverse();
+    ar.Print();
+
+
+
+    cout << ar.index_of(2) << "\n";
+    cout << ar.index_of(7)<<"\n";
+
+    cout << ar.last_index_of(2) << "\n";
+    cout << ar.last_index_of(7) << "\n";
 
     ar.Print();
     ar.insert(1, 7);
@@ -201,11 +254,4 @@ int main()
     cout << "old capacity = " << ar.GetCapacity() << "\n";
     ar.trim_to_size();
     cout << "new capacity = " << ar.GetCapacity() << "\n";
-
-
-
-
-
-
-
 }
