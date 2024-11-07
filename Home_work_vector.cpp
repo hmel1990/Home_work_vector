@@ -215,11 +215,104 @@ public:
         data = temp;
     }
 
+    Vector(const Vector& original)                      //конструктор копирования
+    {
+        size = original.size;
+
+        if (this->data != nullptr) delete[] this->data;
+        this->data = new int[size];
+
+        for (int i = 0; i < size; i++)
+        {
+            data[i] = original.data[i];
+        }
+    }
+
+    Vector& operator = (const Vector& original)
+    {
+        if (this == &original)
+        {
+            return *this;
+        }
+
+        size = original.size;
+
+        if (this->data != nullptr) delete[] this->data;
+        this->data = new int[size];
+
+        for (int i = 0; i < size; i++)
+        {
+            data[i] = original.data[i];
+        }      
+    }
+
+
+
+    friend ostream& operator << (ostream& os, const Vector& f);
+    friend istream& operator >> (istream& is, Vector& f);
+
 };
+
+ostream& operator << (ostream& os, const Vector& f)
+{
+    for (int i = 0; i < f.GetSize(); i++)
+    {
+        os << f.data[i] << "\t";
+    }
+    os << "\n";
+    return os;
+}
+
+//_______________________________________________________________
+istream& operator >> (istream& is, Vector& f)
+{
+    int a;
+       
+    cout << "Введите размер массива: ";
+    is >> a;
+
+    int* b = new int[a];
+
+    cout << "Введите массив из " << a << " элементов\n";
+    for (int i = 0; i < a; i++)
+    {
+        cout << "Элемент " << i + 1 << ": ";
+        is >> b[i];
+    }
+    f.size = a;
+
+    for (int i = 0; i < a; i++)
+    {
+        f.data[i] = b[i];
+    }
+
+    delete[] b;
+
+    return is;
+}
 
 int main()
 {
-    Vector ar;
+    setlocale(0, "");
+   Vector ar;
+
+   cin >> ar;
+
+   cout << ar;
+
+   /*Vector ar_2(ar);
+   cout << ar_2;*/
+
+    Vector ar_2(4);
+    ar_2.PushBack(7);
+    cout << ar_2;
+
+    ar_2 = ar;
+
+    cout << ar_2;
+
+    ar.Clear();
+
     ar.PushBack(1);
     ar.PushBack(2);
     ar.PushBack(3);
