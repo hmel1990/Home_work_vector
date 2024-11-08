@@ -114,9 +114,15 @@ public:
 
     void remove_at(int index)
     {
+        if (size == 0)
+        {
+            cout << "Vector is empty";
+            return;
+        }
         if (index > size)
         {
             size--;
+            return;
         }
         else if (index < 0)
         {
@@ -146,18 +152,22 @@ public:
         }
     }
 
-    void pop_front()
-    {       
+    int pop_front()
+    {   
+        int a = data[0];
         for (int i = 0; i < size; i++)
         {
             data[i] = data[i + 1];
         }
         size--;
+        return a;
     }
 
-    void pop_back()
+    int pop_back()
     {
+        int a = data[size - 1];
         size--;
+        return a;
     }
 
     void trim_to_size()
@@ -173,7 +183,7 @@ public:
         capacity = new_capacity;
     }
 
-    int index_of(int value)
+    int index_of(unsigned int value)
     {
         int i = 0;
         while (i<size)
@@ -205,14 +215,14 @@ public:
 
     void reverse()
     {      
-        int* temp = new int[capacity];
-
-        for (int i = 0; i < size; ++i) 
+        
+        for (int i = 0; i < size/2; ++i) 
         { 
-            temp[i] = data[size - i -1];
+            int temp = data[size - 1 - i];
+            data[size - 1 - i] = data[i];
+            data [i] = temp;
         }
-        delete[] data;
-        data = temp;
+
     }
 
     Vector(const Vector& original)                      //конструктор копирования
@@ -294,16 +304,30 @@ istream& operator >> (istream& is, Vector& f)
 int main()
 {
     setlocale(0, "");
-   Vector ar;
+
+    Vector ar;
+    ar.PushBack(1);
+    ar.PushBack(2);
+    ar.PushBack(3);
+    ar.Print();
+    ar.reverse();
+    ar.Print();
+
+    /*ar.remove_at(5);
+    ar.Print();
+    cout << "OK\n";*/
+
+
+   /*Vector ar;
 
    cin >> ar;
 
-   cout << ar;
+   cout << ar;*/
 
    /*Vector ar_2(ar);
    cout << ar_2;*/
 
-    Vector ar_2(4);
+   /* Vector ar_2(4);
     ar_2.PushBack(7);
     cout << ar_2;
 
@@ -346,5 +370,5 @@ int main()
     ar.Print();
     cout << "old capacity = " << ar.GetCapacity() << "\n";
     ar.trim_to_size();
-    cout << "new capacity = " << ar.GetCapacity() << "\n";
+    cout << "new capacity = " << ar.GetCapacity() << "\n";*/
 }
